@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\Server_csharp_uplink.props" />
+</Project>

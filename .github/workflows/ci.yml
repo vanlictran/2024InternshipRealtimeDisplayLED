@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+      - development
+  pull_request:
+    branches:
+      - main
+      - development
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Restore dependencies
+        run: dotnet restore ./application_c_sharp/application_c_sharp.sln
+
+      - name: Build
+        run: dotnet build --configuration Release --no-restore ./application_c_sharp/application_c_sharp.sln
+
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup .NET Core
+        uses: actions/setup-dotnet@v2
+        with:
+          dotnet-version: 8.0.x
+
+      - name: Restore dependencies
+        run: dotnet restore ./application_c_sharp/application_c_sharp.sln
+
+      - name: Build
+        run: dotnet build --configuration Release --no-restore ./application_c_sharp/application_c_sharp.sln
+
+      - name: Test
+        run: dotnet test --no-restore --verbosity normal ./application_c_sharp/application_c_sharp.sln --filter Category=Unit

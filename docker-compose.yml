@@ -1,0 +1,70 @@
+version: "3.8"
+
+services:
+  node-red:
+      image: nodered/node-red
+      stdin_open: true
+      tty: true
+      ports:
+          - 1880:1880
+      environment:
+        - TZ=Asia/Ho_Chi_Minh
+        - FLOWS=flows.json
+      volumes:
+          - ./node-red-data:/data
+      container_name: nodered
+      networks:
+        - link_data_network
+  
+  influxdb:
+    image: influxdb:2.7
+    container_name: influxdb
+    environment:
+      - DOCKER_INFLUXDB_INIT_MODE=setup
+      - DOCKER_INFLUXDB_INIT_USERNAME=nicolas
+      - DOCKER_INFLUXDB_INIT_PASSWORD=realtime_bus
+      - DOCKER_INFLUXDB_INIT_ORG=myorg
+      - DOCKER_INFLUXDB_INIT_BUCKET=mybucket
+    depends_on:
+      - node-red
+    ports:
+      - "8086:8086"
+    volumes:
+      - influxdb-data:/var/lib/influxdb2
+    networks:
+      - link_data_network
+  grafana:
+    image: grafana/grafana:latest
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    environment:
+      - GF_SECURITY_ADMIN_USER=nicolas
+      - GF_SECURITY_ADMIN_PASSWORD=realtime_bus
+    volumes:
+      - grafana_data:/var/lib/grafana
+    networks:
+      - link_data_network
+  api_csharp_uplink:
+    container_name: api_csharp_uplink
+    build:
+      context: ./application_c_sharp/api_csharp_uplink
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+      - "8001:8001"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_HTTP_PORTS: 
+    depends_on:
+      - node-red
+      - influxdb
+    networks:
+      - link_data_network
+
+volumes:
+  node-red-data:
+  influxdb-data:
+  grafana_data:
+networks:
+  link_data_network:

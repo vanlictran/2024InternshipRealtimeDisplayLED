@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.9.34902.65
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "api_csharp_uplink", "api_csharp_uplink\api_csharp_uplink.csproj", "{A43FEF84-DB4B-4CF9-9AA2-7A13F2611DF6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "test_api_csharp_uplink", "test_api_csharp_uplink\test_api_csharp_uplink.csproj", "{D8501261-8D0E-4132-A623-36FA40F3B192}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A43FEF84-DB4B-4CF9-9AA2-7A13F2611DF6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A43FEF84-DB4B-4CF9-9AA2-7A13F2611DF6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A43FEF84-DB4B-4CF9-9AA2-7A13F2611DF6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A43FEF84-DB4B-4CF9-9AA2-7A13F2611DF6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D8501261-8D0E-4132-A623-36FA40F3B192}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D8501261-8D0E-4132-A623-36FA40F3B192}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D8501261-8D0E-4132-A623-36FA40F3B192}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D8501261-8D0E-4132-A623-36FA40F3B192}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {190C0BE5-C4E6-4F9C-843F-3066262BA47F}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,48 @@
+version: "3.8"
+
+services:  
+  influxdb:
+    image: influxdb:2.7
+    container_name: influxdb
+    environment:
+      - DOCKER_INFLUXDB_INIT_MODE=setup
+      - DOCKER_INFLUXDB_INIT_USERNAME=test
+      - DOCKER_INFLUXDB_INIT_PASSWORD=realtime_test
+      - DOCKER_INFLUXDB_INIT_ORG=myorg
+      - DOCKER_INFLUXDB_INIT_BUCKET=mybucket
+    ports:
+      - "8086:8086"
+    volumes:
+      - influxdb-data-test:/var/lib/influxdb2
+    networks:
+      - link_data_network
+  api_csharp_uplink:
+    container_name: api_csharp_uplink
+    build:
+      context: ./application_c_sharp/api_csharp_uplink
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+      - "8001:8001"
+    environment:
+      ASPNETCORE_ENVIRONMENT: Test
+      ASPNETCORE_HTTP_PORTS: 
+    depends_on:
+      - influxdb
+    networks:
+      - link_data_network
+  test_api_csharp_uplink:
+    container_name: test_api_csharp_uplink
+    build:
+      context: ./application_c_sharp
+      dockerfile: test_api_csharp_uplink/Dockerfile
+    depends_on:
+      - influxdb
+      - api_csharp_uplink
+    networks:
+      - link_data_network
+
+volumes:
+  influxdb-data-test:
+networks:
+  link_data_network:
