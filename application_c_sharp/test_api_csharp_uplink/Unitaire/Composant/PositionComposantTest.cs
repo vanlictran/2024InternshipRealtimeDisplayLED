@@ -14,7 +14,14 @@ public class PositionComposantTest
     public PositionComposantTest()
     {
         IPositionRepository positionRepository = new DbTestPosition();
-        _positionComposant = new PositionComposant(positionRepository);
+        CardComposant cardComposant = new(new DbTestCard());
+        _ = cardComposant.CreateCard(5, "0").Result;
+        _ = cardComposant.CreateCard(5, "1").Result;
+        
+        GraphComposant graphComposant = new GraphComposant(new GraphHopperTest());
+        IPositionProcessor positionProcessor = new TimeComposant(graphComposant, graphComposant, cardComposant);
+        
+        _positionComposant = new PositionComposant(positionRepository, positionProcessor);
     }
 
     [Fact]

@@ -39,6 +39,10 @@ services:
     depends_on:
       - influxdb
       - api_csharp_uplink
+# Add this to check coverage
+#    volumes:
+#      - ./coverage:/app/coverage-results
+#      - ./coverage-report:/app/coverage-report
     networks:
       - link_data_network
 

@@ -4,3 +4,4 @@ application_c_sharp/**/bin
 application_c_sharp/**/obj
 node-red-data
 application_c_sharp/application_c_sharp.sln.DotSettings.user
+coverage**

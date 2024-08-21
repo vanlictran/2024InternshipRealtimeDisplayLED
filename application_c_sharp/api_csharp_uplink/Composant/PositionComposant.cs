@@ -4,7 +4,7 @@ using api_csharp_uplink.Interface;
 
 namespace api_csharp_uplink.Composant;
 
-public class PositionComposant(IPositionRepository positionRepository) : IPositionRegister
+public class PositionComposant(IPositionRepository positionRepository, IPositionProcessor positionProcessor) : IPositionRegister
 {
     public async Task<PositionCard> AddPosition(double latitude, double longitude, string devEuiCard)
     {
@@ -12,6 +12,10 @@ public class PositionComposant(IPositionRepository positionRepository) : IPositi
             throw new ValueNotCorrectException("Latitude or longitude is not correct");
         
         PositionCard positionCard = new(new Position(latitude, longitude), devEuiCard);
+        
+        // To change into RegisterPositionCard when algorithm graph is test totally and ready
+        await positionProcessor.RegisterPositionOneStation(positionCard.Position);
+        
         return await positionRepository.Add(positionCard);
     }
 

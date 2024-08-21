@@ -1,3 +1,6 @@
+using api_csharp_uplink.Connectors;
+using api_csharp_uplink.Settings;
+
 namespace api_csharp_uplink;
 
 using System.Reflection;
@@ -6,6 +9,7 @@ using Repository;
 using DB;
 using Interface;
 using Microsoft.OpenApi.Models;
+using api_csharp_uplink.Repository.Interface;
 
 public class Startup(IConfiguration configuration)
 {
@@ -14,6 +18,7 @@ public class Startup(IConfiguration configuration)
         services.AddControllers();
         services.AddScoped<IScheduleRepository, ScheduleRepository>();
         services.AddScoped<IScheduleRegistration, ScheduleComposant>();
+        services.AddScoped<ScheduleComposant>();
         services.AddScoped<IScheduleFinder, ScheduleComposant>();
         services.AddScoped<ICardFinder, CardComposant>();
         services.AddScoped<ICardRegistration, CardComposant>();
@@ -23,8 +28,20 @@ public class Startup(IConfiguration configuration)
         services.AddScoped<IStationRepository, StationRepository>();
         services.AddScoped<IStationRegister, StationComposant>();
         services.AddScoped<IStationFinder, StationComposant>();
+        services.AddScoped<IItineraryRepository, ItineraryRepository>();
+        services.AddScoped<IItineraryRegister, ItineraryComposant>();
+        services.AddScoped<IItineraryFinder, ItineraryComposant>();
+        services.AddScoped<IConnexionRepository, ItineraryRepository>();
+        services.AddScoped<IConnexionFinder, ConnexionComposant>();
+        services.AddSingleton<IGraphHelper, GraphHelperService>();
+        services.AddScoped<IPositionProcessor, TimeComposant>();
+        services.AddScoped<ITimeProcessor, TimeComposant>();
         services.AddSingleton<IGlobalInfluxDb, GlobalInfluxDb>();
+        services.AddSingleton<IGraphPosition, GraphComposant>();
+        services.AddSingleton<IGraphItinerary>(sp => sp.GetRequiredService<IGraphPosition>() as GraphComposant ?? 
+                                                     throw new InvalidOperationException());
         services.Configure<InfluxDbSettings>(configuration.GetSection("InfluxDB"));
+        services.Configure<GraphHopperSettings>(configuration.GetSection("GraphHopper"));
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen(c =>
         {

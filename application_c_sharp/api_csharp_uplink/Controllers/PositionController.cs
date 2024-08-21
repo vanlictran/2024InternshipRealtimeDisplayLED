@@ -38,6 +38,7 @@ public class PositionController(IPositionRegister positionRegister) : Controller
         }
         catch (Exception e)
         {
+            Console.WriteLine(e.Message);
             return ErrorManager.HandleError(e);
         }
     }
@@ -63,22 +64,24 @@ public class PositionController(IPositionRegister positionRegister) : Controller
         }
         catch (Exception e)
         {
+            Console.WriteLine(e.Message);
             return ErrorManager.HandleError(e);
         }
     }
     
     
 
-    [HttpGet]
+    [HttpGet("{nameStation}")]
     [ProducesResponseType(typeof(string), 200)]
-    public IActionResult TimeBusToNextStation([FromQuery] int idStation)
+    public IActionResult TimeBusToNextStation(string nameStation)
     {
-        if (idStation < 0)
-        {
-            return BadRequest("idStation must be a non-negative integer");
-        }
+        if (string.IsNullOrEmpty(nameStation))
+            return BadRequest();
 
-        return Ok("5 mn");
+        Random rnd = new Random();
+        int time = rnd.Next(1, 90);
+        Console.WriteLine("Time to station : " + time + " mn");
+        return Ok(time + " mn");
     }
 
     /**

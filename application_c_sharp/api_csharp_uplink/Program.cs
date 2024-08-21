@@ -9,7 +9,6 @@ public static class Program
         {
             string? environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
             string jsonToRead = environment != "Test" ? "appsettings.json" : "appsettings.Test.json";
-            
             config.AddJsonFile(jsonToRead, optional: false, reloadOnChange: true);
             config.AddCommandLine(args);
         }).ConfigureWebHostDefaults(webBuilder =>

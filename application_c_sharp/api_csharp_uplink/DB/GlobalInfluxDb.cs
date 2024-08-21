@@ -26,6 +26,19 @@ public class GlobalInfluxDb(IOptions<InfluxDbSettings> influxDbSettings) : IGlob
         }
     }
 
+    public async Task<List<T>> SaveAll<T>(List<T> data)
+    {
+        try
+        {
+            await _client.GetWriteApiAsync().WriteMeasurementsAsync(data, WritePrecision.Ms, _bucketName, _orgName);
+            return data;
+        }
+        catch (Exception e)
+        {
+            throw new DbException(MessageErrorName + e.Message);
+        }
+    }
+
     public async Task<List<T>> GetAll<T>(string measurementName)
     {
         try
@@ -69,6 +82,7 @@ public class GlobalInfluxDb(IOptions<InfluxDbSettings> influxDbSettings) : IGlob
         }
         catch (Exception e)
         {
+            Console.WriteLine(e.Message);
             throw new DbException(MessageErrorName + e.Message);
         }
     }
