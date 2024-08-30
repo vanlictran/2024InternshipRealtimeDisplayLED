@@ -17,6 +17,7 @@ To run the script, execute:
 
 ```bash
 python main.py
+```
 
 
 ### 3. Compile and Upload to Arduino
@@ -24,4 +25,11 @@ Navigate to:
 
 ```bash
 \DownlinkPart\UCA21-main\Code\LORAWAN\ABP\Basic\UCA-ABP_Basic
+```
+
+Open this file in the Arduino IDE, compile, and upload it to the Arduino board. This will allow the board to receive data via LoRaWAN.
+
+
+### Note
+Make sure to clone the entire repository to ensure all necessary libraries are correctly set up.
 
