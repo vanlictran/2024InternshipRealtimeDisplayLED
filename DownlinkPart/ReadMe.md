@@ -25,5 +25,3 @@ Navigate to:
 ```bash
 \DownlinkPart\UCA21-main\Code\LORAWAN\ABP\Basic\UCA-ABP_Basic
 
-
-This version should render correctly in GitHub, with proper headings and formatting.
