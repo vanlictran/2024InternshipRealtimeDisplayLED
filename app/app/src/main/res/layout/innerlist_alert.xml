@@ -1,0 +1,7 @@
+<ImageView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="30dp"
+    android:layout_height="30dp"
+    android:background="@drawable/line1"
+    android:layout_margin="8dp"
+    android:id="@+id/alertLogoBus"
+    android:textColor="#FFFFFF"/>
